@@ -1,0 +1,7 @@
+{
+  "name": "my-ion-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
