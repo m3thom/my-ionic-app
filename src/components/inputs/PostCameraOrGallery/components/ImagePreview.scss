@@ -1,0 +1,20 @@
+.image-preview-wrapper {
+  margin: 2px;
+  width: 90px;
+  height: 90px;
+  min-width: 90px;
+  min-height: 90px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+
+  > ion-icon {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+  }
+}

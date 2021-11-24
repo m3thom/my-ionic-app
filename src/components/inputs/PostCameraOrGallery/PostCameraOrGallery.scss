@@ -1,0 +1,17 @@
+.post-image-preview__wrapper {
+  position: relative;
+
+  & > ion-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 30px;
+    color: #c7c7c770;
+  }
+}
+
+.image-preview-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}

@@ -1,0 +1,13 @@
+.field-label {
+  display: block;
+  font-size: 14px;
+  /* color: var(--ion-color-medium) !important; */
+}
+
+.error-message-placeholder {
+  opacity: 0;
+}
+
+.error-message {
+  font-size: 14px;
+}
