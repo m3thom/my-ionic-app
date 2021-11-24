@@ -6,6 +6,8 @@ To install dependencies
 npm insatll
 ```
 
+You will need to setup `.env.*` to run this project.
+
 To start the project
 
 ```bash
