@@ -9,8 +9,10 @@ import {
     IonList,
 } from "@ionic/react";
 import { usePostsPathHelper } from "helper/pathHelper/posts";
-import { Link } from "react-router-dom";
+// import useApiRequestWrapper from "hooks/useApiRequestWrapper";
+import { Link, Redirect } from "react-router-dom";
 import { useGetPostsQuery } from 'store/services/post'
+import { useMemo, useState } from "react";
 
 const PostExcerpt = ({ post }) => {
     const { showPostsPath } = usePostsPathHelper(post.id)
@@ -23,6 +25,18 @@ const PostExcerpt = ({ post }) => {
 
 const Posts = () => {
     const { indexPostsPath, newPostsPath } = usePostsPathHelper()
+    const [page, setPage] = useState(1)
+    const [perPage, setPerPage] = useState(15)
+
+    const queryOptions = useMemo(() => {
+        return {
+            url: indexPostsPath,
+            params: {
+                page,
+                per_page: perPage
+            }
+        }
+    }, [indexPostsPath, page])
 
     const {
         data,
@@ -31,7 +45,9 @@ const Posts = () => {
         isError,
         error,
         isFetching
-    } = useGetPostsQuery({ url: indexPostsPath, params: { page: 1, per_page: 10 } })
+    } = useGetPostsQuery(queryOptions)
+    // useApiRequestWrapper
+
     let RenderContent
     if (isFetching) {
         RenderContent = <IonLabel>Loading...</IonLabel>
@@ -40,7 +56,14 @@ const Posts = () => {
             {data.map(post => <PostExcerpt post={post} key={post.id} />)}
         </IonList>
     } else if (isError) {
-        RenderContent = <div>{error.toString()}</div>
+        switch (error?.originalStatus) {
+            case 401:
+                return <Redirect to='/users/sign_in' />;
+            case 404:
+                return <Redirect to='/page_not_found' />;
+            default:
+                return <Redirect to='/' />;
+        }
     }
 
     return (

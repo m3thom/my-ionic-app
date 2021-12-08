@@ -1,9 +1,14 @@
-// import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge } from '@ionic/react';
-// import { personCircle, informationCircle } from 'ionicons/icons';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useDispatch, useSelector } from 'react-redux';
+import applicationSlice from 'store/slices/application';
 import './Home.css';
 
 const Home = () => {
+  const applicationState = useSelector(state => state.application)
+  const dispatch = useDispatch()
+  const toggleModal = () => {
+    dispatch(applicationSlice.actions.toggleModal())
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -17,6 +22,10 @@ const Home = () => {
             <IonLabel>Posts</IonLabel>
           </IonItem>
         </IonList>
+        <div>
+          <button onClick={toggleModal}>Toggle</button>
+          Modal: {applicationState.isModalOpen.toString()}
+        </div>
       </IonContent>
     </IonPage>
   );

@@ -21,6 +21,9 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 /* Theme variables */
 import './theme/variables.css';
 
@@ -28,6 +31,7 @@ const App = () => (
   <Provider store={store}>
     <IonApp>
       <AppRoute />
+      <ToastContainer />
     </IonApp>
   </Provider>
 );

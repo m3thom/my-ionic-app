@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
@@ -8,49 +8,35 @@ import PostsIndexPage from './pages/posts/PostsIndexPage';
 import PostNewPage from './pages/posts/PostNewPage'
 import PostEditPage from './pages/posts/PostEditPage'
 import DashBoardIndexPage from 'pages/dashboard/DashboardIndexPage';
-// import TabBar from './components/TabBar';
+// import TabBar from './components/TabBar'
+import ErrorBoundary from 'layout/ErrorBoundary';
+import SignInPage from 'pages/users/SignInPage';
+import PageNotFound from 'layout/PageNotFound';
 
 const AppRoute = () => {
 
     return (
         <IonReactRouter>
             <IonRouterOutlet>
-                {/* <Route exact path="/posts/new">
-                    <PostNewPage />
-                </Route>
-                <Route path="/posts/:id(\d+)/edit">
-                    <PostEditPage />
-                </Route>
-                <Route path="/posts/:id(\d+)">
-                    <Post />
-                </Route>
-                <Route exact path="/posts">
-                    <Posts />
-                </Route>
+                <ErrorBoundary>
+                    <Route exact path="/" component={Home} />
 
-                <Route exact path="/home">
-                    <Home />
-                </Route>
+                    <Route exact path="/posts/new" component={PostNewPage} />
 
-                <Route exact path="/">
-                    <Redirect to="/home" />
-                </Route> */}
+                    <Route exact path="/posts/:id(\d+)/edit" component={PostEditPage} />
+                    <Route exact path="/posts/:id(\d+)" component={PostShowPage} />
 
-                <Route exact path="/" component={Home} />
+                    <Route exact strict path="/posts" component={PostsIndexPage} />
 
-                <Route exact path="/posts/new" component={PostNewPage} />
+                    <Route exact path="/dashboard" component={DashBoardIndexPage} />
 
-                <Route exact path="/posts/:id(\d+)/edit" component={PostEditPage} />
-                <Route exact path="/posts/:id(\d+)" component={PostShowPage} />
+                    <Route exact path="/users/sign_in" component={SignInPage} />
 
-                <Route exact strict path="/posts" component={PostsIndexPage} />
-
-                <Route exact path="/dashboard" component={DashBoardIndexPage} />
-
+                    <Route exact path="/page_not_found" component={PageNotFound} />
+                </ErrorBoundary>
             </IonRouterOutlet>
-
             {/* <TabBar /> */}
-        </IonReactRouter>
+        </IonReactRouter >
     )
 }
 
