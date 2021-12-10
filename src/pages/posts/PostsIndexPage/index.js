@@ -8,14 +8,20 @@ import {
     IonItem,
     IonList,
 } from "@ionic/react";
-import { usePostsPathHelper } from "helper/pathHelper/posts";
+import postsPathHelper from "helper/pathHelper/posts";
+import usersPathHelper from "helper/pathHelper/users";
 // import useApiRequestWrapper from "hooks/useApiRequestWrapper";
-import { Link, Redirect } from "react-router-dom";
-import { useGetPostsQuery } from 'store/services/post'
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { useGetPostsQuery } from 'store/services/posts'
 import { useMemo, useState } from "react";
+import { baseSplitApi } from "store/services/_base";
+import { useDispatch } from "react-redux";
+import { resetLocalData } from "helper/localStorageHelper";
+import { resetCredentials } from "store/slices/auth";
+import { useSignOutUserMutation } from "store/services/users";
 
 const PostExcerpt = ({ post }) => {
-    const { showPostsPath } = usePostsPathHelper(post.id)
+    const { showPostsPath } = postsPathHelper(post.id)
     return (
         <IonItem routerLink={showPostsPath}>
             <IonLabel>{post.content}</IonLabel>
@@ -24,9 +30,14 @@ const PostExcerpt = ({ post }) => {
 }
 
 const Posts = () => {
-    const { indexPostsPath, newPostsPath } = usePostsPathHelper()
+    const history = useHistory();
+    const dispatch = useDispatch()
+    const { indexPostsPath, newPostsPath } = postsPathHelper()
+    const { deleteUserSessionsPath } = usersPathHelper()
     const [page, setPage] = useState(1)
     const [perPage, setPerPage] = useState(15)
+
+    const [signOutUser, { }] = useSignOutUserMutation()
 
     const queryOptions = useMemo(() => {
         return {
@@ -47,6 +58,17 @@ const Posts = () => {
         isFetching
     } = useGetPostsQuery(queryOptions)
     // useApiRequestWrapper
+    const handleSignOut = async () => {
+        try {
+            await signOutUser({ url: deleteUserSessionsPath });
+            await resetLocalData();
+            dispatch(baseSplitApi.util.resetApiState());
+            dispatch(resetCredentials());
+            history.replace('/');
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     let RenderContent
     if (isFetching) {
@@ -58,7 +80,7 @@ const Posts = () => {
     } else if (isError) {
         switch (error?.originalStatus) {
             case 401:
-                return <Redirect to='/users/sign_in' />;
+                return <Redirect to='/users/sign_up' />;
             case 404:
                 return <Redirect to='/page_not_found' />;
             default:
@@ -81,7 +103,9 @@ const Posts = () => {
                 {" "}
                 <Link to={newPostsPath}>New post</Link>
                 {" "}
-                <Link to={'/dashboard'}>Dash</Link>
+                <Link to={'/'}>Home</Link>
+                {" "}
+                <button onClick={handleSignOut}>Sign out</button>
             </IonContent>
         </IonPage>
     )

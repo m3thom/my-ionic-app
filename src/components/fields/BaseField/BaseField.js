@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { IonLabel, IonText } from '@ionic/react'
 import { Field, ErrorMessage, getIn } from 'formik'
@@ -49,7 +48,6 @@ const BaseField = ({
                 color='primary'
               >
                 {label || t(`label.${name}`)}
-                {/* contente */}
               </IonLabel>
             )
           }
@@ -62,12 +60,6 @@ const BaseField = ({
               message ? <IonText className='error-message' color='danger'>{message}</IonText> : null
             )}
           />
-
-          {
-            !noErrorMessagePlaceholder && (
-              <IonText className='error-message-placeholder'>.</IonText>
-            )
-          }
 
         </>
       )}

@@ -1,9 +1,9 @@
 import { IonButton, IonContent, IonLabel, IonPage } from "@ionic/react"
-import { PostEditForm } from "forms/PostsForm"
-import { usePostsPathHelper } from "helper/pathHelper/posts"
+import { PostEditForm } from "forms/postsForm"
+import postsPathHelper from "helper/pathHelper/posts"
 import { useRef } from "react"
 import { useHistory, useParams } from "react-router"
-import { useEditPostMutation, useGetPostQuery } from "store/services/post"
+import { useEditPostMutation, useGetPostQuery } from "store/services/posts"
 
 const PostEditPage = () => {
     const { id } = useParams();
@@ -11,7 +11,7 @@ const PostEditPage = () => {
         showPostsPath,
         updatePostsPath,
         indexPostsPath,
-    } = usePostsPathHelper(id)
+    } = postsPathHelper(id)
 
     const {
         data,

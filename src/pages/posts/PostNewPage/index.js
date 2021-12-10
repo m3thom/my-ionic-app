@@ -1,12 +1,12 @@
 import { IonButton, IonContent, IonPage } from '@ionic/react';
-import { PostNewForm } from 'forms/PostsForm';
-import { usePostsPathHelper } from 'helper/pathHelper/posts';
+import { PostNewForm } from 'forms/postsForm';
+import postsPathHelper from 'helper/pathHelper/posts';
 import { useRef } from 'react';
-import { useAddNewPostMutation } from 'store/services/post'
+import { useAddNewPostMutation } from 'store/services/posts'
 import { useHistory } from 'react-router-dom'
 
 const PostNewPage = () => {
-    const { createPostsPath, indexPostsPath } = usePostsPathHelper()
+    const { createPostsPath, indexPostsPath } = postsPathHelper()
     const [addNewPost, { isLoading }] = useAddNewPostMutation()
     const submitButtonRef = useRef()
     const history = useHistory()

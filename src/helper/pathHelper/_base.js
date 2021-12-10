@@ -1,6 +1,6 @@
 import inflection from 'inflection'
 
-const useBasePathHelper = (path, id) => {
+const basePathHelper = (path, id) => {
     const camelized = inflection.camelize(path)
 
     const generatedPaths = {}
@@ -20,4 +20,4 @@ const useBasePathHelper = (path, id) => {
     return generatedPaths
 }
 
-export default useBasePathHelper
+export default basePathHelper

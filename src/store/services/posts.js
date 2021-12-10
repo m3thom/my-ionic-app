@@ -1,6 +1,7 @@
 import { baseSplitApi } from './_base'
 
-const postSlice = baseSplitApi.injectEndpoints({
+const postsSlice = baseSplitApi.injectEndpoints({
+    overrideExisting: false,
     endpoints: builder => ({
         getPosts: builder.query({
             query: config => config,
@@ -36,7 +37,6 @@ const postSlice = baseSplitApi.injectEndpoints({
             invalidatesTags: (_result, _error, _arg) => [{ type: 'Post', id: 'PARTIAL-LIST' }]
         }),
     }),
-    overrideExisting: false,
 })
 
 export const {
@@ -45,4 +45,4 @@ export const {
     useAddNewPostMutation,
     useEditPostMutation,
     useDeletePostMutation,
-} = postSlice
+} = postsSlice

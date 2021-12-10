@@ -26,12 +26,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import InitializedLayout from 'InitializedLayout';
 
 const App = () => (
   <Provider store={store}>
     <IonApp>
-      <AppRoute />
-      <ToastContainer />
+      <InitializedLayout>
+        <AppRoute />
+        <ToastContainer />
+      </InitializedLayout>
     </IonApp>
   </Provider>
 );

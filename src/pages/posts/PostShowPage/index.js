@@ -7,8 +7,8 @@ import {
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
-import { usePostsPathHelper } from "helper/pathHelper/posts";
-import { useDeletePostMutation, useGetPostQuery } from 'store/services/post'
+import postsPathHelper from "helper/pathHelper/posts";
+import { useDeletePostMutation, useGetPostQuery } from 'store/services/posts'
 import { useHistory, useParams } from "react-router"
 
 const Post = () => {
@@ -21,7 +21,7 @@ const Post = () => {
         editPostsPath,
         indexPostsPath,
         deletePostsPath
-    } = usePostsPathHelper(id)
+    } = postsPathHelper(id)
 
     const {
         data,
