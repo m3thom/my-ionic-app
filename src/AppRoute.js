@@ -36,7 +36,7 @@ const AppRoute = () => {
                     <PrivateRoute exact path="/posts/:id(\d+)">
                         <PostShowPage />
                     </PrivateRoute>
-                    <PrivateRoute exact strict path="/posts">
+                    <PrivateRoute exact path="/posts">
                         <PostsIndexPage />
                     </PrivateRoute>
                     

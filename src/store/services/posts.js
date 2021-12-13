@@ -1,40 +1,42 @@
-import { baseSplitApi } from './_base'
+import {
+    baseSplitApi,
+    baseGetResourcesProvidesTags,
+    baseResourceRequestTags,
+    baseAddNewResourceInvalidatesTags,
+    baseDeleteResourceInvalidatesTags
+} from './_base'
 
 const postsSlice = baseSplitApi.injectEndpoints({
     overrideExisting: false,
     endpoints: builder => ({
         getPosts: builder.query({
             query: config => config,
-            providesTags: (result = [], _error, _arg) => [
-                'Post',
-                { type: 'Post', id: 'PARTIAL-LIST' },
-                ...result.map(({ id }) => ({ type: 'Post', id }))
-            ]
+            providesTags: baseGetResourcesProvidesTags
         }),
         getPost: builder.query({
             query: config => config,
-            providesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.id }]
+            providesTags: baseResourceRequestTags
         }),
         addNewPost: builder.mutation({
             query: config => ({
                 ...config,
                 method: 'POST',
             }),
-            invalidatesTags: ['Post']
+            invalidatesTags: baseAddNewResourceInvalidatesTags
         }),
         editPost: builder.mutation({
             query: config => ({
                 ...config,
                 method: 'PATCH',
             }),
-            invalidatesTags: (_result, _error, arg) => [{ type: 'Post', id: arg.id }]
+            invalidatesTags: baseResourceRequestTags
         }),
         deletePost: builder.mutation({
             query: config => ({
                 ...config,
                 method: 'DELETE',
             }),
-            invalidatesTags: (_result, _error, _arg) => [{ type: 'Post', id: 'PARTIAL-LIST' }]
+            invalidatesTags: baseDeleteResourceInvalidatesTags
         }),
     }),
 })

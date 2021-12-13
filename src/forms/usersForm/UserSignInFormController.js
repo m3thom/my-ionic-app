@@ -2,7 +2,7 @@ import { withFormik } from 'formik'
 import Form from './UserSignInForm'
 
 import * as Yup from 'yup'
-import { BaseFormikConfig } from 'forms/_BaseForm'
+import { BaseFormikConfig } from 'forms/_baseForm'
 
 const UserFormValidationSchema = Yup
    .object()

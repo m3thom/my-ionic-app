@@ -35,7 +35,7 @@ const Posts = () => {
     const { indexPostsPath, newPostsPath } = postsPathHelper()
     const { deleteUserSessionsPath } = usersPathHelper()
     const [page, setPage] = useState(1)
-    const [perPage, setPerPage] = useState(15)
+    // const [perPage, setPerPage] = useState(15)
 
     const [signOutUser, { }] = useSignOutUserMutation()
 
@@ -44,7 +44,6 @@ const Posts = () => {
             url: indexPostsPath,
             params: {
                 page,
-                per_page: perPage
             }
         }
     }, [indexPostsPath, page])
@@ -75,7 +74,7 @@ const Posts = () => {
         RenderContent = <IonLabel>Loading...</IonLabel>
     } else if (isSuccess) {
         RenderContent = <IonList>
-            {data.map(post => <PostExcerpt post={post} key={post.id} />)}
+            {data.data.map(post => <PostExcerpt post={post} key={post.id} />)}
         </IonList>
     } else if (isError) {
         switch (error?.originalStatus) {
@@ -95,17 +94,14 @@ const Posts = () => {
                     <IonTitle>Posts</IonTitle>
                 </IonToolbar>
             </IonHeader>
-
+            {" "}
+            <Link to={newPostsPath}>New post</Link>
+            {" "}
+            <Link to={'/'}>Home</Link>
+            {" "}
+            <button onClick={handleSignOut}>Sign out</button>
             <IonContent className="ion-padding">
-
                 {RenderContent}
-
-                {" "}
-                <Link to={newPostsPath}>New post</Link>
-                {" "}
-                <Link to={'/'}>Home</Link>
-                {" "}
-                <button onClick={handleSignOut}>Sign out</button>
             </IonContent>
         </IonPage>
     )

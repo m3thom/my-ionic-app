@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import { BaseFormikConfig } from 'forms/_BaseForm'
+import { BaseFormikConfig } from 'forms/_baseForm'
 
 export const PostFormValidationSchema = Yup
     .object()

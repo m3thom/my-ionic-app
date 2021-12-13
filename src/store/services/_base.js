@@ -9,7 +9,7 @@ export const baseSplitApi = createApi({
         baseUrl: process.env.REACT_APP_BASE_API,
         prepareHeaders: (headers, { getState }) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
-            const token = getState().auth?.token
+            const { token } = getState()?.auth
             if (token) {
                 headers.set('authorization', `Bearer ${token}`)
             }
@@ -24,3 +24,18 @@ export const baseSplitApi = createApi({
         'User',
     ],
 })
+
+/*
+All of these functions recieved same arguments
+1. result: The result data return from the API.
+2. error: The error data return from the API.
+3. arg: The argument recieved from function call in the component.
+*/
+export const baseGetResourcesProvidesTags = ({ data = [], type }, _error, _arg) => [
+    type,
+    { type, id: 'PARTIAL-LIST' },
+    ...data.map(({ id }) => ({ type, id }))
+]
+export const baseResourceRequestTags = ({ type }, _error, arg) => [{ type, id: arg.id }]
+export const baseAddNewResourceInvalidatesTags = ({ type }, _error, _arg) => [type]
+export const baseDeleteResourceInvalidatesTags = ({ type }, _error, _arg) => [{ type, id: 'PARTIAL-LIST' }]
