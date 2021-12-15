@@ -1,0 +1,21 @@
+.paginate-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    &__current-page-indicator {
+        border: 1px solid blue;
+        border-radius: 20px;
+        padding: 10px;
+    }
+
+    &__page-indicator {
+        padding: 10px;
+        color: white;
+        cursor: pointer;
+    }
+
+    &__gap {
+        color: white;
+    }
+}

@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 
 import Input from 'components/inputs/Input'
 
+import './BaseField.scss'
+
 const BaseField = ({
   name,
   label,

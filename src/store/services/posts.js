@@ -6,7 +6,7 @@ import {
     baseDeleteResourceInvalidatesTags
 } from './_base'
 
-const postsSlice = baseSplitApi.injectEndpoints({
+export const postsSlice = baseSplitApi.injectEndpoints({
     overrideExisting: false,
     endpoints: builder => ({
         getPosts: builder.query({

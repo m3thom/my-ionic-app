@@ -1,5 +1,7 @@
 import {
+    IonBackButton,
     IonButton,
+    IonButtons,
     IonContent,
     IonHeader,
     IonLabel,
@@ -36,7 +38,7 @@ const Post = () => {
         history.push(indexPostsPath)
     }
 
-    const post = data
+    const post = data?.data
 
     let content
     if (isFetching) {
@@ -53,9 +55,13 @@ const Post = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Post</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/posts" />
+                    </IonButtons>
+                    <IonTitle>Show Post</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             <IonContent className="ion-padding">
                 <div>
                     Hello World, welcome to post show  page

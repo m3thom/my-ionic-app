@@ -1,9 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import { IonInput, IonTextarea } from '@ionic/react'
 import clsx from 'clsx'
 
-// import './Input.scss'
+import './Input.scss'
 
 const Input = ({
   value,

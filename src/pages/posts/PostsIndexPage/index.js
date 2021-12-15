@@ -7,18 +7,25 @@ import {
     IonLabel,
     IonItem,
     IonList,
+    IonButtons,
+    IonBackButton,
+    IonButton,
 } from "@ionic/react";
 import postsPathHelper from "helper/pathHelper/posts";
 import usersPathHelper from "helper/pathHelper/users";
 // import useApiRequestWrapper from "hooks/useApiRequestWrapper";
 import { Link, Redirect, useHistory } from "react-router-dom";
-import { useGetPostsQuery } from 'store/services/posts'
-import { useMemo, useState } from "react";
+import { postsSlice, useGetPostsQuery } from 'store/services/posts'
+import { useMemo } from "react";
 import { baseSplitApi } from "store/services/_base";
 import { useDispatch } from "react-redux";
 import { resetLocalData } from "helper/localStorageHelper";
 import { resetCredentials } from "store/slices/auth";
 import { useSignOutUserMutation } from "store/services/users";
+import Paginate from 'components/Paginate'
+import { POSTS_BASE_PATH, } from 'constants/routeConstants'
+import usePagesConfig from "hooks/usePagesConfig";
+import { PARTIAL_LIST_TAG_ID, POST_TAG_TYPE } from "constants/apiConstants";
 
 const PostExcerpt = ({ post }) => {
     const { showPostsPath } = postsPathHelper(post.id)
@@ -30,14 +37,14 @@ const PostExcerpt = ({ post }) => {
 }
 
 const Posts = () => {
+    const [{ page }, { setPage, resetPage }] = usePagesConfig(POSTS_BASE_PATH)
+
     const history = useHistory();
     const dispatch = useDispatch()
     const { indexPostsPath, newPostsPath } = postsPathHelper()
     const { deleteUserSessionsPath } = usersPathHelper()
-    const [page, setPage] = useState(1)
-    // const [perPage, setPerPage] = useState(15)
 
-    const [signOutUser, { }] = useSignOutUserMutation()
+    const [signOutUser,] = useSignOutUserMutation()
 
     const queryOptions = useMemo(() => {
         return {
@@ -54,7 +61,8 @@ const Posts = () => {
         isSuccess,
         isError,
         error,
-        isFetching
+        isFetching,
+        refetch
     } = useGetPostsQuery(queryOptions)
     // useApiRequestWrapper
     const handleSignOut = async () => {
@@ -68,14 +76,26 @@ const Posts = () => {
             console.error(error);
         }
     }
+    const handleRefresh = () => {
+        dispatch(postsSlice.util.invalidateTags([{ type: POST_TAG_TYPE, id: PARTIAL_LIST_TAG_ID }]))
+        resetPage()
+        refetch()
+    }
 
     let RenderContent
     if (isFetching) {
         RenderContent = <IonLabel>Loading...</IonLabel>
     } else if (isSuccess) {
-        RenderContent = <IonList>
-            {data.data.map(post => <PostExcerpt post={post} key={post.id} />)}
-        </IonList>
+        if (data.data) {
+            RenderContent = <IonList>
+                {data.data.map(post => <PostExcerpt post={post} key={post.id} />)}
+            </IonList>
+        } else {
+            RenderContent = <div>
+                :(, No content yet 
+            </div>
+        }
+
     } else if (isError) {
         switch (error?.originalStatus) {
             case 401:
@@ -91,15 +111,33 @@ const Posts = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/" />
+                    </IonButtons>
                     <IonTitle>Posts</IonTitle>
                 </IonToolbar>
             </IonHeader>
+
             {" "}
             <Link to={newPostsPath}>New post</Link>
             {" "}
             <Link to={'/'}>Home</Link>
             {" "}
             <button onClick={handleSignOut}>Sign out</button>
+
+            <Paginate
+                pagy={data?.pagy}
+                setPage={setPage}
+                isFetching={isFetching}
+                isSuccess={isSuccess}
+            />
+            <IonButton
+                onClick={handleRefresh}
+                disabled={isFetching}
+            >
+                Refresh
+            </IonButton>
+
             <IonContent className="ion-padding">
                 {RenderContent}
             </IonContent>

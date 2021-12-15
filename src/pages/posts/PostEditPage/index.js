@@ -35,7 +35,7 @@ const PostEditPage = () => {
         content = (
             <>
                 <PostEditForm
-                    data={data}
+                    data={data.data}
                     submitButtonRef={submitButtonRef}
                     onSubmit={handleSubmit}
                 />

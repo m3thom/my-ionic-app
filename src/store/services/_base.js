@@ -1,5 +1,6 @@
 // Or from '@reduxjs/toolkit/query' if not using the auto-generated hooks
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { PARTIAL_LIST_TAG_ID, POST_TAG_TYPE, USER_TAG_TYPE } from 'constants/apiConstants'
 
 // initialize an empty api service that we'll inject endpoints into later as needed
 export const baseSplitApi = createApi({
@@ -20,22 +21,22 @@ export const baseSplitApi = createApi({
     // The "endpoints" represent operations and requests for this server
     endpoints: () => ({}),
     tagTypes: [
-        'Post',
-        'User',
+        POST_TAG_TYPE,
+        USER_TAG_TYPE,
     ],
 })
 
 /*
-All of these functions recieved same arguments
+All of these functions are recieved same arguments
 1. result: The result data return from the API.
 2. error: The error data return from the API.
 3. arg: The argument recieved from function call in the component.
 */
 export const baseGetResourcesProvidesTags = ({ data = [], type }, _error, _arg) => [
     type,
-    { type, id: 'PARTIAL-LIST' },
+    { type, id: PARTIAL_LIST_TAG_ID },
     ...data.map(({ id }) => ({ type, id }))
 ]
 export const baseResourceRequestTags = ({ type }, _error, arg) => [{ type, id: arg.id }]
 export const baseAddNewResourceInvalidatesTags = ({ type }, _error, _arg) => [type]
-export const baseDeleteResourceInvalidatesTags = ({ type }, _error, _arg) => [{ type, id: 'PARTIAL-LIST' }]
+export const baseDeleteResourceInvalidatesTags = ({ type }, _error, _arg) => [{ type, id: PARTIAL_LIST_TAG_ID }]

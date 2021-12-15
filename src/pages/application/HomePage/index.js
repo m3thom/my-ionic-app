@@ -1,15 +1,15 @@
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import usersPathHelper from 'helper/pathHelper/users';
 import { useDispatch, useSelector } from 'react-redux';
-import applicationSlice from 'store/slices/application';
-import './Home.css';
+import { toggleModal } from 'store/slices/application';
+import './Home.scss';
 
 const Home = () => {
   const { newUserRegistrationsPath, newUserSessionsPath } = usersPathHelper()
   const applicationState = useSelector(state => state.application)
   const dispatch = useDispatch()
-  const toggleModal = () => {
-    dispatch(applicationSlice.actions.toggleModal())
+  const handleToggleModal = () => {
+    dispatch(toggleModal())
   }
 
   return (
@@ -36,7 +36,7 @@ const Home = () => {
           </IonItem>
         </IonList>
         <div>
-          <button onClick={toggleModal}>Toggle</button>
+          <button onClick={handleToggleModal}>Toggle</button>
           Modal: {applicationState.isModalOpen.toString()}
         </div>
       </IonContent>

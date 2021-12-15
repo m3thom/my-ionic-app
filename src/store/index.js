@@ -3,6 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query/react'
 import { baseSplitApi } from './services/_base'
 import applicationSlice from './slices/application'
 import authSlice from './slices/auth'
+import pagesConfig from './slices/pagesConfig'
 import { rtkQueryShowToastOnError } from './middlewares'
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
     [baseSplitApi.reducerPath]: baseSplitApi.reducer,
     [applicationSlice.name]: applicationSlice.reducer,
     [authSlice.name]: authSlice.reducer,
+    [pagesConfig.name]: pagesConfig.reducer,
   },
 })
 

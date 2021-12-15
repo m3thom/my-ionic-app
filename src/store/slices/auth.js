@@ -10,14 +10,14 @@ const authSlice = createSlice({
     name: AUTH_SLICE_NAME,
     initialState,
     reducers: {
-        setCredentials: (
+        setCredentials(
             state,
             { payload: { user, token } }
-        ) => {
+        ) {
             state.user = user
             state.token = token
         },
-        resetCredentials: (state) => {
+        resetCredentials(state) {
             state.user = null
             state.token = null
         }
@@ -31,4 +31,4 @@ export const {
 
 export default authSlice
 
-export const selectCurrentUser = (state) => state.auth.user
+export const selectCurrentUser = (state) => state[AUTH_SLICE_NAME].user
