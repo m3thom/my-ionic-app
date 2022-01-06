@@ -1,13 +1,13 @@
-export const initURLSearchParams = () => {
+export const initURLSearchParamsHelper = () => {
     return new URLSearchParams(document.location.search);
 }
 
-export const getURLSearchParams = (key, defualt = null) => {
-    let params = initURLSearchParams()
+export const getURLSearchParamsHelper = (key, defualt = null) => {
+    let params = initURLSearchParamsHelper()
     return params.get(key) || defualt
 }
 
-export const setURLSearchParams = (key, value) => {
-    let params = initURLSearchParams()
+export const setURLSearchParamsHelper = (key, value) => {
+    let params = initURLSearchParamsHelper()
     return params.set(key, value)
 }

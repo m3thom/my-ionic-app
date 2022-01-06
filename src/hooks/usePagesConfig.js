@@ -1,4 +1,4 @@
-import { getURLSearchParams } from 'helper/URLSearchParamsHelper'
+import { getURLSearchParamsHelper } from 'helper/URLSearchParamsHelper'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPage, resetPage, selectPageConfig } from 'store/slices/pagesConfig'
@@ -11,7 +11,7 @@ const usePagesConfig = (stateKey) => {
     useEffect(() => {
         const popstateHanler = (event) => {
             event.preventDefault()
-            const page = getURLSearchParams('page')
+            const page = getURLSearchParamsHelper('page')
             if (page) setPage(page)
         }
         // window.onpopstate = popstateHanler
